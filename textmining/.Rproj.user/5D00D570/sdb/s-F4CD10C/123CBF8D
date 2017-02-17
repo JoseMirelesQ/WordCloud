@@ -1,0 +1,18 @@
+{
+    "contents" : "\nlibrary(\"tm\")\nlibrary(\"SnowballC\")\nlibrary(\"wordcloud\")\nlibrary(\"RColorBrewer\")\n\ntext <- readLines(file.choose())\n\nfilePath <- \"http://www.sthda.com/sthda/RDoc/example-files/martin-luther-king-i-have-a-dream-speech.txt\"\ntext <- readLines(filePath)\ndocs <- Corpus(VectorSource(text))\n\ninspect(docs)\n\ntoSpace <- content_transformer(function (x , pattern ) gsub(pattern, \" \", x))\ndocs <- tm_map(docs, toSpace, \"/\")\ndocs <- tm_map(docs, toSpace, \"@\")\ndocs <- tm_map(docs, toSpace, \"\\\\|\")\n\n\n# Convert the text to lower case\ndocs <- tm_map(docs, content_transformer(tolower))\n# Remove numbers\ndocs <- tm_map(docs, removeNumbers)\n# Remove english common stopwords\ndocs <- tm_map(docs, removeWords, stopwords(\"spanish\"))\n# Remove your own stop word\n# specify your stopwords as a character vector\ndocs <- tm_map(docs, removeWords, c(\"blabla1\", \"blabla2\")) \n# Remove punctuations\ndocs <- tm_map(docs, removePunctuation)\n# Eliminate extra white spaces\ndocs <- tm_map(docs, stripWhitespace)\n# Text stemming\n# docs <- tm_map(docs, stemDocument)\n\ndtm <- TermDocumentMatrix(docs)\nm <- as.matrix(dtm)\nv <- sort(rowSums(m),decreasing=TRUE)\nd <- data.frame(word = names(v),freq=v)\nhead(d, 10)\n\n\nset.seed(1234)\nwordcloud(words = d$word, freq = d$freq, min.freq = 1,\n          max.words=50, random.order=FALSE, rot.per=0.35, \n          colors=brewer.pal(8, \"Accent\"))",
+    "created" : 1487343020025.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3129831378",
+    "id" : "123CBF8D",
+    "lastKnownWriteTime" : 1487353993,
+    "path" : "~/R/textmining/wordcloud.R",
+    "project_path" : "wordcloud.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

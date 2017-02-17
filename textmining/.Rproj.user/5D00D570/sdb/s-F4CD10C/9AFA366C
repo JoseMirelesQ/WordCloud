@@ -1,0 +1,18 @@
+{
+    "contents" : "library(rvest)\nlibrary(xml2)\n\nurl <- \"http://www.opensourceshakespeare.org/views/plays/play_view.php?WorkID=hamlet&Act=4&Scene=3&Scope=scene\"\n\nread_html(url)%>%\n  html_nodes(css = \".playtext\")%>%\n  html_text()",
+    "created" : 1487348178998.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1777523821",
+    "id" : "9AFA366C",
+    "lastKnownWriteTime" : 1487354013,
+    "path" : "~/R/textmining/scrape.R",
+    "project_path" : "scrape.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

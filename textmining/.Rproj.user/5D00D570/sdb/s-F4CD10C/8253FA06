@@ -1,0 +1,18 @@
+{
+    "contents" : "library(\"tm\")\nlibrary(\"SnowballC\")\nlibrary(\"wordcloud\")\nlibrary(\"RColorBrewer\")\n\n#text <- readLines(file.choose())\n\nfilePath <- \"C:/Users/430006064/Documents/R/textmining/temp/Julie.txt\"\ntext <- readLines(filePath)\ndocs <- Corpus(VectorSource(text))\n\ninspect(docs)\n\ntoSpace <- content_transformer(function (x , pattern ) gsub(pattern, \" \", x))\ndocs <- tm_map(docs, toSpace, \"-\")\n\n\n# Convert the text to lower case\ndocs <- tm_map(docs, content_transformer(tolower))\n# Remove numbers\ndocs <- tm_map(docs, removeNumbers)\n# Remove spanish common stopwords\ndocs <- tm_map(docs, removeWords, stopwords(\"english\"))\n# Remove your own stop word\n# specify your stopwords as a character vector\ndocs <- tm_map(docs, removeWords, c(\"thou\",\"thy\",\"romeo\",\"juliet\",\"will\",\"thee\",\"shakespeare\",\"william\")) \n# Remove punctuations\ndocs <- tm_map(docs, removePunctuation)\n# Eliminate extra white spaces\ndocs <- tm_map(docs, stripWhitespace)\n\ndtm <- TermDocumentMatrix(docs)\nm <- as.matrix(dtm)\nv <- sort(rowSums(m),decreasing=TRUE)\nd <- data.frame(word = names(v),freq=v)\nhead(d, 10)\n\n\nset.seed(1234)\nwordcloud(words = d$word, freq = d$freq, min.freq = 1,\n          max.words=200, random.order=FALSE, rot.per=0.35, \n          colors=brewer.pal(8, \"Accent\"))\n\nwordcloud2(data = d)\nfigPath <- system.file(\"C:/Users/430006064/Documents/R/textmining/temp/descarga.png\",package = \"wordcloud2\")\nwordcloud2(d, figPath = figPath, shape=\"star\", size = 1.5,color = \"skyblue\")\n\nwordcloud2(d, shape=\"square\", size = .5,color = \"skyblue\")\n\nletterCloud(d, word = \"Raul\", size = 1)\n\n\n\nfigPath <- \"C:/Users/430006064/Documents/R/textmining/temp/tweet.png\"\nwordcloud2(d, figPath = figPath, size = 1.5,color = \"skyblue\")\n\nclass(d)\nset.seed(1234)\nhdi<-data.frame(c(\"HDI\",\"Israel\",\"Ramirez\",\"Jean\",\"Arreola\",\"Ricardo\",\"Murguia\",\"Rebeca\",\"Linares\",\"Carmen\",\"de Alba\",\"Pamela\",\"Hernandez\",\"Dileri\",\"Linares\",\"Manuel\",\"Mireles\"),c(3,rep(1,16)))\nwordcloud2(hdi, figPath = figPath, size = .8,color = \"skyblue\")\nwordcloud2(hdi, shape=\"star\", size = 1.5,color = \"skyblue\")\n\ngetwd()",
+    "created" : 1487344596514.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "824787513",
+    "id" : "8253FA06",
+    "lastKnownWriteTime" : 1487355907,
+    "path" : "~/R/textmining/wordcloudperso.R",
+    "project_path" : "wordcloudperso.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
